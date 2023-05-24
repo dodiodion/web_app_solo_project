@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1>New Peep</h1>
+    <form action="/homr" method="POST">
+      {% if errors %}
+      <div class="t-errors">
+        Your form contained these errors: {{ errors }}
+      </div>
+      {% endif %}
+      <p>
+        <label for="post">Peep Entry: </label>
+        <input type="text" name= "post" id="post">
+      </p>
+      <input type="submit" value="Post Peep">
+    </form>
+    <h1>Peeps Dashboard</h1>
+    {% for post in posts%}
+      <div>
+        <b>Author:</b> {{usernames[loop.index0]}}
+        <b>published on:</b> {{post.time_posted}}<br>
+        {{post.content}}
+      </div>
+    {% endfor %}
+    <a href="/signup">Sign up to Chitter</a>
+  </body>
+</html>

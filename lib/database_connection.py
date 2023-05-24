@@ -10,8 +10,8 @@ from psycopg.rows import dict_row
 # That's why we have provided it!
 class DatabaseConnection:
     # VVV CHANGE BOTH OF THESE VVV
-    DEV_DATABASE_NAME = "web_project_html"
-    TEST_DATABASE_NAME = "web_project_html_test"
+    DEV_DATABASE_NAME = "web_solo_project"
+    TEST_DATABASE_NAME = "web_solo_project_test"
 
     def __init__(self, test_mode=False):
         self.test_mode = test_mode
