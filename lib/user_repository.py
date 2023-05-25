@@ -33,3 +33,15 @@ class UserRepository:
             [email, hashed_password_attempt])
 
         return len(rows) > 0
+    
+    def find_by_email(self, email):
+        rows = self._connection.execute(
+            'SELECT * FROM users WHERE email = %s', [email])
+        return User(rows[0]["id"], rows[0]["name"], rows[0]["email"], 
+                    rows[0]["username"], rows[0]["password"])
+    
+    def find_by_id(self, id):
+        rows = self._connection.execute(
+            'SELECT * FROM users WHERE id = %s', [id])
+        return User(rows[0]["id"], rows[0]["name"], rows[0]["email"], 
+                    rows[0]["username"], rows[0]["password"])
