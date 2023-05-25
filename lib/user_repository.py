@@ -23,3 +23,13 @@ class UserRepository:
             user = User(row["id"], row["name"], row["email"], row["username"], row["password"])
             users.append(user)
         return users
+    
+    def check_password(self, email, password_attempt):
+        binary_password_attempt = password_attempt.encode("utf-8")
+        hashed_password_attempt = hashlib.sha256(binary_password_attempt).hexdigest()
+
+        rows = self._connection.execute(
+            'SELECT * FROM users WHERE email = %s AND password = %s',
+            [email, hashed_password_attempt])
+
+        return len(rows) > 0
