@@ -1,3 +1,4 @@
+import hashlib
 from lib.user import User
 class UserRepository:
     def __init__(self, connection):
@@ -10,8 +11,10 @@ class UserRepository:
         return User(rows[0]["id"], rows[0]["name"], rows[0]["email"], rows[0]["username"], rows[0]["password"])
     
     def create(self, user):
+        binary_password = user.password.encode("utf-8")
+        hashed_password = hashlib.sha256(binary_password).hexdigest()
         self._conection.execute('INSERT INTO users (name, email, username, password)'\
-                                'VALUES(%s, %s, %s, %s)', [user.name, user.email, user.username, user.password])
+                                'VALUES(%s, %s, %s, %s)', [user.name, user.email, user.username, hashed_password])
         
     def all(self):
         rows = self._conection.execute('SELECT * FROM users')

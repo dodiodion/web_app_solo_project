@@ -12,9 +12,9 @@ def test_get_all_posts(db_connection):
 
     # Assert on the results
     assert posts == [
-        Post(1, "2021-12-09 15:45:21", "There are pinguins on the beach", 1),
-        Post(2, "2022-02-08 18:45:21", "Am i really all the things that are outside of me", 1),
         Post(3, "2022-12-08 13:45:21", "Smoking so much I cant breathe", 1),
+        Post(2, "2022-02-08 18:45:21", "Am i really all the things that are outside of me", 2),
+        Post(1, "2021-12-09 15:45:21", "There are pinguins on the beach", 1),
     ]
 
 """
@@ -27,8 +27,8 @@ def test_create_post(db_connection):
     post_repository.create(post)
     posts = post_repository.all()
     assert posts == [
-        Post(1, "2021-12-09 15:45:21", "There are pinguins on the beach", 1),
-        Post(2, "2022-02-08 18:45:21", "Am i really all the things that are outside of me", 1),
+        Post(4, "2023-05-09 05:45:21", "Les oiseaux chantonnaient dans la jungle maudite", 1),
         Post(3, "2022-12-08 13:45:21", "Smoking so much I cant breathe", 1),
-        Post(4, "2023-05-09 05:45:21", "Les oiseaux chantonnaient dans la jungle maudite", 1)
+        Post(2, "2022-02-08 18:45:21", "Am i really all the things that are outside of me", 2),
+        Post(1, "2021-12-09 15:45:21", "There are pinguins on the beach", 1),
     ]

@@ -9,6 +9,7 @@ class PostRepository:
         for row in rows:
             item = Post(row["id"], str(row["time_posted"]), row["content"], row["user_id"])
             posts.append(item)
+        posts.sort(key=lambda x: x.time_posted, reverse=True)
         return posts
     
     def create(self, post):

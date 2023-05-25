@@ -10,9 +10,9 @@ def test_get_posts(page, test_web_address, db_connection):
     page.screenshot(path="screenshot.png", full_page=True)
     div_tags = page.locator("div")
     expect(div_tags).to_have_text([
+    "Author: bob_builder published on: 2022-12-08 13:45:21 Smoking so much I cant breathe",
+    "Author: bob_gratton published on: 2022-02-08 18:45:21 Am i really all the things that are outside of me",
     "Author: bob_builder published on: 2021-12-09 15:45:21 There are pinguins on the beach",
-    "Author: bob_builder published on: 2022-02-08 18:45:21 Am i really all the things that are outside of me",
-    "Author: bob_builder published on: 2022-12-08 13:45:21 Smoking so much I cant breathe"
     ])
 
 def test_create_album(page, test_web_address, db_connection):
@@ -30,5 +30,11 @@ def test_create_post(page, test_web_address, db_connection):
     page.set_default_timeout(1000)
     db_connection.seed("seeds/post_user.sql")
     page.goto(f"http://{test_web_address}/home")
-    page.fill("input[name=content]", "Test name")
-    page.click("text='Post new peep'")
+    page.fill("input[name=content]", "Test the new peep content")
+    page.click("text='Post Peep'")
+
+    content_element = page.locator(".t-content")
+    expect(content_element).to_have_text(["Test the new peep content",
+                                        "Smoking so much I cant breathe",
+                                        "Am i really all the things that are outside of me",
+                                        "There are pinguins on the beach"])

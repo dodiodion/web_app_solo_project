@@ -35,9 +35,11 @@ def create_post():
     post_repository = PostRepository(connection)
     content = request.form['content']
     # TODO: add real user_id of the logged in user
-    new_post = Post(None, datetime.now(), content, 1)
+    posted_time_list = str(datetime.datetime.now()).split(".")
+    posted_time = "".join(posted_time_list[0])
+    new_post = Post(None, posted_time, content, 1)
     post_repository.create(new_post)
-    return render_template("home.html")
+    return redirect(f"/home")
 
 @app.route('/signup', methods = ['GET'])
 def get_signup():

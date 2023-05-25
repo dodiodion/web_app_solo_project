@@ -16,7 +16,7 @@ We can compare two identical users
 And have them be equal
 """
 def test_users_are_equal():
-    user1 = User(1, "test name", "test@email.com", "Test username", "Test password", )
+    user1 = User(1, "test name", "test@email.com", "Test username", "Test password")
     user2 = User(1, "test name", "test@email.com", "Test username", "Test password")
     assert user1 == user2
 
