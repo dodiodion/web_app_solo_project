@@ -6,9 +6,9 @@
   <body>
     <h1>Login</h1>
     <form action="/login" method="POST">
-        {% if errors %}
+        {% if error_login %}
         <div class="t-errors">
-          Your form contained these errors: {{ errors }}
+          Error: {{ error_login }}
         </div>
         {% endif %}
         <p>

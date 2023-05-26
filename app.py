@@ -1,4 +1,5 @@
 import os, datetime
+from dotenv import load_dotenv
 from flask import Flask, request, redirect, render_template, session
 from lib.database_connection import get_flask_database_connection
 from lib.post_repository import PostRepository
@@ -8,7 +9,8 @@ from lib.user import User
 
 # Create a new Flask app
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "secret key"
+load_dotenv()
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 # == Your Routes Here ==
 
@@ -25,16 +27,16 @@ def get_posts():
     posts = post_repository.all()
     user_repository = UserRepository(connection)
     logged_in_as = "a guest"
+    logged_in = False
     if 'user_id' in session:
         logged_in_as = user_repository.find_by_id(session['user_id']).username
-    else:
-        pass
+        logged_in = True
     usernames = []
     for post in posts:
         user = user_repository.get_user_with_post_id(post.user_id)
         usernames.append(user.username)
     return render_template("home.html", posts=posts, usernames=usernames,
-                        logged_in_as = logged_in_as)
+                        logged_in_as = logged_in_as, logged_in=logged_in)
 
 @app.route('/home', methods=['POST'])
 def create_post():
@@ -85,7 +87,13 @@ def login_post():
         session['user_id'] = user.id
         return redirect(f"/home")
     else:
-        return redirect(f"/home")
+        error_login = "The email and password combination is not valid"
+        return render_template('login.html', error_login=error_login)
+    
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.pop('user_id')
+    return redirect(f"/home")
 # == End Example Code ==
 
 # These lines start the server if you run this file directly

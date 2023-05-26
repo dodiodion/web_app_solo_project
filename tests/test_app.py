@@ -48,3 +48,14 @@ def test_login(page, test_web_address, db_connection):
     page.fill("input[name=email]", "allo@gmail.com")
     page.fill("input[name=password]", "123456")
     page.click("text='Log In'")
+
+def test_login_fails(page, test_web_address, db_connection):
+    page.set_default_timeout(1000)
+    db_connection.seed("seeds/post_user.sql")
+    page.goto(f"http://{test_web_address}/home")
+    page.click("text=Login to Chitter")
+    page.fill("input[name=email]", "allo@gmail.com")
+    page.fill("input[name=password]", "123456")
+    page.click("text='Log In'")
+    content_element = page.locator(".t-errors")
+    expect(content_element).to_have_text(["Error: The email and password combination is not valid"])

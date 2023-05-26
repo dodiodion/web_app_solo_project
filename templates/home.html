@@ -27,6 +27,13 @@
       </div>
     {% endfor %}
     <a href="/signup">Sign up to Chitter</a><br>
+    {% if not logged_in %}
     <a href="/login">Login to Chitter</a>
+    {% endif %}
+    {% if logged_in %}
+    <form action="/logout" method="POST">
+      <input type="submit" value="Log Out">
+    </form>
+    {% endif %}
   </body>
 </html>
